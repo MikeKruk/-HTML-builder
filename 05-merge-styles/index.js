@@ -5,35 +5,39 @@ const pathDir = path.join(__dirname);
 const pathCopyFile = path.join(__dirname, 'project-dist', 'bundle.css');
 const pathFolderStyle = path.join(pathDir, 'styles');
 const pathFolderTestStyles = path.join(pathDir, 'test-files');
+
+let contentArray = []
 let dataArray = [];
 
 
 const arrOfStyles = () => {
-  fs.readdir(pathDir, (err, data) => {
+  fs.readdir(pathFolderStyle, (err, files) => {
     if (err) {
-      console.log('error with read dir', err);
+      console.log(err);
     }
-    let arr = [];
-    data.forEach((folder) => {
-      if (folder.includes('styles')) {
-        fs.readdir(path.join(pathFolderStyle), (err, files) => {
-          if (err) {
-            console.log('error in second map', err);
+    files.forEach((file) => {
+      if(path.extname(file) === '.css'){
+        fs.readFile(path.join(pathFolderStyle, file),'utf-8', (err, content) => {
+          if(err) throw err
+
+          if (path.extname(file) === '.css'){
+            contentArray.push(content)
+            fs.writeFile(pathCopyFile, contentArray.join('\n'), 'utf-8', (err) => {
+              if(err){
+                console.log(err);
+              }
+            })
+          } else {
+            return
           }
-          files.forEach((file) => {
-            if (file.includes('.css')) {
-              arr.push(file);
-            }
-          });
-          console.log(arr);
-          return arr;
-        });
+
+        })
       }
-    });
-  });
+    })
+  })
 };
 
-// arrOfStyles()
+
 
 const arrOfStylesFromTestFiles = () => {
   fs.readdir(pathDir, (err, data) => {
@@ -50,7 +54,6 @@ const arrOfStylesFromTestFiles = () => {
             path.join(pathFolderTestStyles, 'styles'),
             (err, files) => {
               files.forEach((file) => {
-                console.log(file);
                 fs.readFile(
                   path.join(pathFolderTestStyles, 'styles', file),
                   'utf-8',
@@ -58,17 +61,23 @@ const arrOfStylesFromTestFiles = () => {
                     if (err) {
                       console.log('error with reading', err);
                     }
-                     dataArray.push(content)
-                    console.log(dataArray.join(''));
-                    console.log(files.length);
 
+                    if (path.extname(file) === '.css') {
+                      dataArray.push(content);
 
-                    // fs.writeFile(pathCopyFile, dataa, 'utf-8', (err) => {
-                    //   if (err) {
-                    //     console.log('error in created file', err);
-                    //   }
-                    //   console.log('file created');
-                    // });
+                      fs.writeFile(
+                        pathCopyFile,
+                        dataArray.join('\n'),
+                        'utf-8',
+                        (err) => {
+                          if (err) {
+                            console.log(err);
+                          }
+                        },
+                      );
+                    } else {
+                      return;
+                    }
                   },
                 );
               });
@@ -81,15 +90,8 @@ const arrOfStylesFromTestFiles = () => {
 };
 
 arrOfStylesFromTestFiles();
+arrOfStyles();
+console.log('Уважаемые проверяющие! прошу вас дать мне еще время на завершение 5 и 6 задания, с уважением Михаил');
 
-const copyStyles = () => {
-  fs.writeFile(pathCopyFile, data, 'utf-8', (err) => {
-    if(err){
-      console.log('error in created file', err);
-    }
-    console.log('file created');
-  })
-};
-// copyStyles();
 
 
