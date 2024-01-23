@@ -7,7 +7,6 @@ const pathFolderStyle = path.join(pathDir, 'styles');
 const pathFolderTestStyles = path.join(pathDir, 'test-files');
 
 let contentArray = []
-let dataArray = [];
 
 
 const arrOfStyles = () => {
@@ -63,11 +62,11 @@ const arrOfStylesFromTestFiles = () => {
                     }
 
                     if (path.extname(file) === '.css') {
-                      dataArray.push(content);
+                      contentArray.push(content);
 
                       fs.writeFile(
                         pathCopyFile,
-                        dataArray.join('\n'),
+                        contentArray.join('\n'),
                         'utf-8',
                         (err) => {
                           if (err) {
@@ -91,7 +90,7 @@ const arrOfStylesFromTestFiles = () => {
 
 arrOfStylesFromTestFiles();
 arrOfStyles();
-console.log('Уважаемые проверяющие! прошу вас дать мне еще время на завершение 5 и 6 задания, с уважением Михаил');
+
 
 
 

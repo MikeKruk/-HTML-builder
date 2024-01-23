@@ -13,7 +13,7 @@ const enterText = () => {
     if (answer.toLocaleLowerCase() === 'exit') {
       rl.close();
     } else {
-      fs.appendFile(path.join(__dirname, 'text.txt'), answer, (err) => {
+      fs.appendFile(path.join(__dirname, 'text.txt'), `${answer}\n`, (err) => {
         if (err) throw err;
         enterText();
       });
