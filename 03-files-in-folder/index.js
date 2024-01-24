@@ -12,9 +12,9 @@ fs.readdir(pathFolder, 'utf-8', (err, files) => {
         throw err;
       }else if (stats.isFile()) {
         console.log(
-          `File name is: ${fileName} - file extension is: ${path.extname(
+          `${fileName} - ${path.extname(
             file,
-          )} - file size is: ${stats.size / 1024}kb`,
+          )} - ${stats.size / 1024}kb`,
         );
       }
     });
