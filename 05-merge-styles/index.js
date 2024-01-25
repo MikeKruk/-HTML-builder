@@ -36,59 +36,6 @@ const arrOfStyles = () => {
   })
 };
 
-
-
-const arrOfStylesFromTestFiles = () => {
-  fs.readdir(pathDir, (err, data) => {
-    if (err) {
-      console.log('error with read dir', err);
-    }
-    data.forEach((folder) => {
-      if (folder.includes('test-files')) {
-        fs.readdir(path.join(pathFolderTestStyles), (err) => {
-          if (err) {
-            console.log('error in second map', err);
-          }
-          fs.readdir(
-            path.join(pathFolderTestStyles, 'styles'),
-            (err, files) => {
-              files.forEach((file) => {
-                fs.readFile(
-                  path.join(pathFolderTestStyles, 'styles', file),
-                  'utf-8',
-                  (err, content) => {
-                    if (err) {
-                      console.log('error with reading', err);
-                    }
-
-                    if (path.extname(file) === '.css') {
-                      contentArray.push(content);
-
-                      fs.writeFile(
-                        pathCopyFile,
-                        contentArray.join('\n'),
-                        'utf-8',
-                        (err) => {
-                          if (err) {
-                            console.log(err);
-                          }
-                        },
-                      );
-                    } else {
-                      return;
-                    }
-                  },
-                );
-              });
-            },
-          );
-        });
-      }
-    });
-  });
-};
-
-arrOfStylesFromTestFiles();
 arrOfStyles();
 
 
