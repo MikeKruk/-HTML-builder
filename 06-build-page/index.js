@@ -8,7 +8,7 @@ const pathAssetsFolder = path.join(__dirname, 'assets');
 const components = path.join(__dirname, 'components');
 const template = path.join(__dirname, 'template.html');
 
-const arrStyleContent = [];
+let arrStyleContent = [];
 
 const replaceContent = () => {
   fs.readFile(template, 'utf-8', (err, code) => {
